@@ -1,6 +1,14 @@
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
 # if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
 #   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 # fi
@@ -79,7 +87,8 @@ HIST_STAMPS="dd/mm/yyyy"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting poetry dirhistory history docker you-should-use copypath copyfile cp tmux zoxide redis-cli pip python zsh-history-substring-search)
+plugins=(git zsh-autosuggestions dirhistory history docker you-should-use copypath copyfile)
+# plugins=(git zsh-autosuggestions zsh-syntax-highlighting dirhistory history docker you-should-use copypath copyfile cp tmux zoxide redis-cli pip python)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -113,6 +122,9 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+
+# eval "$(tmux)"
+
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
@@ -126,6 +138,15 @@ lol()
         "$@"
     fi
 }
+
+function zip() {
+    if [ -z "$1" ]; then
+        echo "Usage: tarzip <filename>"
+        return 1
+    fi
+    tar -czvf "$1.tar.gz" "$1"
+}
+
 
 extract() {
   if [ -f "$1" ]; then
@@ -174,6 +195,7 @@ alias fcopy="fpreview | xclip -selection clipboard"
 alias fcopywin="fpreviewwin | xclip -selection clipboard"
 
 alias b="cat"
+alias c="cat"
 alias s="sudo"
 
 # IMP: these two are the main commands
@@ -238,6 +260,9 @@ alias winback="cd /mnt/c/Users/divyansh/Documents/Backup\ Settings\ \&\ Files"
 alias cdw="cd /home/dpi0/dwnloads"
 alias cdd="cd /home/dpi0/documents"
 
+alias subl="/mnt/c/Program\ Files/Sublime\ Text/subl.exe"
+
+
 # EXPORTS
 
 export PIPENV_VENV_IN_PROJECT=0
@@ -253,7 +278,7 @@ export PATH="$PATH:/home/dpi0/documents/nvim-linux64/bin"
 
 export ATUIN_NOBIND="true"
 
-export EDITOR="code --wait"
+# export EDITOR="code --wait"
 
 export PATH=$(pwd)/bin:$PATH
 
@@ -266,9 +291,10 @@ eval "$(atuin init zsh)"
 # eval "$(zellij setup --generate-auto-start zsh)"
 
 
-ZSH_HIGHLIGHT_HIGHLIGHTERS+=(brackets pattern cursor)
-ZSH_HIGHLIGHT_STYLES[alias]='fg=#11ff58,bold,underline'
-ZSH_HIGHLIGHT_STYLES[path]='fg=yellow,bold,underline'
+#ZSH_HIGHLIGHT_HIGHLIGHTERS+=(brackets pattern cursor)
+#ZSH_HIGHLIGHT_STYLES[alias]='fg=#fff,bg=#00236A,bold,underline'
+#ZSH_HIGHLIGHT_STYLES[path]='fg=yellow,bold,underline'
 
 
 typeset -A ZSH_HIGHLIGHT_STYLES
+
